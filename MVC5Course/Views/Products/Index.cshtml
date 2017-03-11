@@ -9,13 +9,19 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<form>
+    <input type="search" name="keyword" value="" />
+    <input type="submit" value="搜尋" />
+</form>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
+            <a href="@Url.Action("Index","Products",new { sortBy = "+price" ,ViewBag.keyword})">▲</a>
             @Html.DisplayNameFor(model => model.Price)
+            <a href="@Url.Action("Index","Products",new { sortBy = "-price" ,ViewBag.keyword })">▼</a>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Active)
