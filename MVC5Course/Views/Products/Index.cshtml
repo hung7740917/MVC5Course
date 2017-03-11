@@ -17,7 +17,7 @@
 @using PagedList
 @using PagedList.Mvc
 
-@Html.PagedListPager(Model as IPagedList, p => Url.Action("Index", new { PageNo = p }))
+@Html.PagedListPager(Model as IPagedList, p => Url.Action("Index", new { PageNo = p, keyword = ViewBag.keyword}))
 
 <table class="table">
     <tr>
@@ -25,9 +25,9 @@
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
-            <a href="@Url.Action("Index","Products",new { sortBy = "+price" ,ViewBag.keyword})">▲</a>
+            <a href="@Url.Action("Index","Products",new { sortBy = "+price" ,keyword = ViewBag.keyword})">▲</a>
             @Html.DisplayNameFor(model => model.Price)
-            <a href="@Url.Action("Index","Products",new { sortBy = "-price" ,ViewBag.keyword })">▼</a>
+            <a href="@Url.Action("Index","Products",new { sortBy = "-price" ,keyword = ViewBag.keyword})">▼</a>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Active)
