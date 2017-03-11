@@ -28,6 +28,7 @@ namespace MVC5Course.Models
         public string ProductName { get; set; }
         [Required]
         [Range(1,9999999999,ErrorMessage = "{0}輸入錯誤")]
+        [DisplayFormat(DataFormatString = "NT$ {0:N0}")]
         public Nullable<decimal> Price { get; set; }
         [Required]
         public Nullable<bool> Active { get; set; }
