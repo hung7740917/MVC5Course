@@ -16,7 +16,7 @@ namespace MVC5Course.Models.ValidationAttribute
         {
             string str = Convert.ToString(value);
 
-            if (str.Contains(str))
+            if (str.Contains("aaa"))
             {
                 return false;
             }
