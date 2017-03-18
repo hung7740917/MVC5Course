@@ -40,7 +40,7 @@ namespace MVC5Course.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginVM loginVM,string ReturnUrl)
+        public ActionResult Login(LoginVM loginVM,string ReturnUrl = "")
         {
             if(ModelState.IsValid)
             {
