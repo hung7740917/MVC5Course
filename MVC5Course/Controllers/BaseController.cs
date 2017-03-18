@@ -10,5 +10,11 @@ namespace MVC5Course.Controllers
     public abstract class BaseController : Controller
     {
         public ProductRepository repoProduct = RepositoryHelper.GetProductRepository();
+
+        protected override void HandleUnknownAction(string actionName)
+        {
+            //base.HandleUnknownAction(actionName);
+            this.Redirect("/").ExecuteResult(this.ControllerContext);
+        }
     }
 }
