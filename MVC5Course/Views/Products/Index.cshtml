@@ -15,21 +15,23 @@
 </form>
 
 @*@using PagedList
-@using PagedList.Mvc
+    @using PagedList.Mvc
 
-@Html.PagedListPager(Model as IPagedList, p => Url.Action("Index", new { PageNo = p, keyword = ViewBag.keyword}))*@
+    @Html.PagedListPager(Model as IPagedList, p => Url.Action("Index", new { PageNo = p, keyword = ViewBag.keyword}))*@
 
-@Html.Partial("_Pager",Model)
+@Html.Partial("_Pager", Model)
 
+@using (Html.BeginForm())
+{
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
-            <a href="@Url.Action("Index","Products",new { sortBy = "+price" ,keyword = ViewBag.keyword})">▲</a>
+            <a href="@Url.Action("Index", "Products", new { sortBy = "+price", keyword = ViewBag.keyword })">▲</a>
             @Html.DisplayNameFor(model => model.Price)
-            <a href="@Url.Action("Index","Products",new { sortBy = "-price" ,keyword = ViewBag.keyword})">▼</a>
+            <a href="@Url.Action("Index", "Products", new { sortBy = "-price", keyword = ViewBag.keyword })">▼</a>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Active)
@@ -40,27 +42,40 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @{
+        var data = Model.ToArray();
+    }
+
+    @for (int i = 0; i < data.Length; i++)
     {
+        @Html.HiddenFor(modelItem => data[i].ProductId)
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
+                @Html.EditorFor(modelItem => data[i].ProductName)
+                @Html.ValidationMessageFor(modelItem => data[i].ProductName)
             </td>
-            <td class="@(item.Price > 100 ? "text-danger" : "" )">
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
+            <td class="@(data[i].Price > 100 ? "text-danger" : "" )">
+                @Html.EditorFor(modelItem => data[i].Price)
+                @Html.ValidationMessageFor(modelItem => data[i].Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+                @Html.EditorFor(modelItem => data[i].Active)
+                @Html.ValidationMessageFor(modelItem => data[i].Active)
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => data[i].Stock)
+                @Html.ValidationMessageFor(modelItem => data[i].Stock)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = data[i].ProductId }) |
+                @Html.ActionLink("Details", "Details", new { id = data[i].ProductId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = data[i].ProductId })
             </td>
         </tr>
     }
 
 </table>
+<input type="submit" value="送出" />
+}
+
+

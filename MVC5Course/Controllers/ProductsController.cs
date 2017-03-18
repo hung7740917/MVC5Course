@@ -19,25 +19,53 @@ namespace MVC5Course.Controllers
         // GET: Products
         public ActionResult Index(string sortBy,string keyword,int PageNo = 1)
         {
-            var data = repoProduct.All().AsQueryable();
+            DoSearchToIndex(sortBy, keyword, PageNo);
 
-            if(!String.IsNullOrEmpty(keyword))
+            return View();
+        }
+
+        private void DoSearchToIndex(string sortBy, string keyword, int PageNo)
+        {
+            var allData = repoProduct.All().AsQueryable();
+
+            if (!String.IsNullOrEmpty(keyword))
             {
-                data = data.Where(p => p.ProductName.Contains(keyword));
+                allData = allData.Where(p => p.ProductName.Contains(keyword));
             }
 
-            if(sortBy == "+price")
+            if (sortBy == "+price")
             {
-                data = data.OrderBy(p => p.Price);
+                allData = allData.OrderBy(p => p.Price);
             }
             else
             {
-                data = data.OrderByDescending(p => p.Price);
+                allData = allData.OrderByDescending(p => p.Price);
             }
 
             ViewBag.keyword = keyword;
+            ViewData.Model = allData.ToPagedList(PageNo, 10);
+        }
 
-            return View(data.ToPagedList(PageNo, 10));
+        [HttpPost]
+        public ActionResult Index(Product[] data, string sortBy, string keyword, int PageNo = 1)
+        {
+            if(ModelState.IsValid)
+            {
+                foreach (var item in data)
+                {
+                    var oldData = repoProduct.Find(item.ProductId);
+                    oldData.ProductName = item.ProductName;
+                    oldData.Price = item.Price;
+                    oldData.Active = item.Active;
+                    oldData.Stock = item.Stock;
+                }
+                repoProduct.UnitOfWork.Commit();
+                return RedirectToAction("Index");
+            }
+
+            DoSearchToIndex(sortBy, keyword, PageNo);
+
+            return View();
         }
 
         // GET: Products/Details/5
