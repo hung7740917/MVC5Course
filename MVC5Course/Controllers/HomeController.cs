@@ -72,5 +72,10 @@ namespace MVC5Course.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index");
         }
+
+        public ActionResult NewPage()
+        {
+            return View();
+        }
     }
 }
