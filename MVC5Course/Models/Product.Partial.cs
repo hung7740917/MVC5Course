@@ -31,6 +31,7 @@ namespace MVC5Course.Models
         public Nullable<bool> Active { get; set; }
 
         [Required]
+        [Range(0,99999)]
         public Nullable<decimal> Stock { get; set; }
     
         public virtual ICollection<OrderLine> OrderLine { get; set; }

@@ -15,13 +15,14 @@ namespace MVC5Course.Controllers
             return View();
         }
 
-        public ActionResult About(string ex = "")
+        [HandleError(View = "Error_ArgumentException", ExceptionType = typeof(ArgumentException))]
+        public ActionResult About(int ex)
         {
             ViewBag.Message = "Your application description page.";
 
-            if(ex == "err")
+            if(ex == 1)
             {
-                throw new IndexOutOfRangeException("ex");
+                throw new Exception("ex");
             }
 
             return View();
