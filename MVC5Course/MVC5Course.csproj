@@ -190,6 +190,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\RazorHTMLController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="ActionFilter\常用ViewBag設定Attribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -397,6 +398,7 @@
     <Content Include="Views\Test\View3.cshtml" />
     <Content Include="Views\Shared\Error_DbEntityValidationException.cshtml" />
     <Content Include="Views\Shared\Error_ArgumentException.cshtml" />
+    <Content Include="Views\RazorHTML\RazorTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
