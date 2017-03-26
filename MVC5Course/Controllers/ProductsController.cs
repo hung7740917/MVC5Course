@@ -18,8 +18,12 @@ namespace MVC5Course.Controllers
         //private FabricsEntities db = new FabricsEntities();
 
         // GET: Products
-        public ActionResult Index(string sortBy,string keyword,int PageNo = 1)
+        public ActionResult Index(string FilterActive,string sortBy,string keyword,int PageNo = 1)
         {
+            //ViewBag.FilterActive = new SelectList(new List<string> { "Ture", "False" });
+            var optionActive = repoProduct.All().Select(p => p.Active.HasValue ? p.Active.Value.ToString() : "False").Distinct().ToList();
+            ViewBag.FilterActive = new SelectList(optionActive);
+
             DoSearchToIndex(sortBy, keyword, PageNo);
 
             return View();
@@ -48,7 +52,7 @@ namespace MVC5Course.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(Product[] data, string sortBy, string keyword, int PageNo = 1)
+        public ActionResult Index(string FilterActive,Product[] data, string sortBy, string keyword, int PageNo = 1)
         {
             if(ModelState.IsValid)
             {
@@ -63,6 +67,9 @@ namespace MVC5Course.Controllers
                 repoProduct.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
+            //ViewBag.FilterActive = new SelectList(new List<string> { "Ture", "False" });
+            var optionActive = repoProduct.All().Select(p => p.Active.HasValue ? p.Active.Value.ToString() : "False").Distinct().ToList();
+            ViewBag.FilterActive = new SelectList(optionActive);
 
             DoSearchToIndex(sortBy, keyword, PageNo);
 
@@ -141,7 +148,7 @@ namespace MVC5Course.Controllers
         public ActionResult Edit(int id,FormCollection form)
         {
             var product = repoProduct.Find(id);
-            if (TryUpdateModel(product,new string[] { "ProductName","Stock"}))
+            if (TryUpdateModel(product,new string[] { "ProductName","Stock","Active"}))
             {
                 //var db = repoProduct.UnitOfWork.Context;
                 //db.Entry(product).State = EntityState.Modified;

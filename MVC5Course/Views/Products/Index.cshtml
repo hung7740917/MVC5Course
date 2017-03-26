@@ -10,6 +10,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <form>
+    @Html.DropDownList("FilterActive",null,"請選擇Active狀態",new { onchange = ""})
     @Html.TextBox("keyword")
     <input type="submit" value="搜尋" />
 </form>
